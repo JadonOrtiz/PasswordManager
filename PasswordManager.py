@@ -13,7 +13,7 @@ admin_password.txt
 
 import bcrypt
 import os
-from PasswordLibrary import derive_key, get_salt, view_passwords, add_password
+from PasswordLibrary import derive_key, get_salt, view_passwords, add_password, delete_password, modify_password
 
 ADMIN_PASSWORD_FILE = "admin_password.txt"
 MAX_ATTEMPTS = 5
@@ -72,6 +72,8 @@ def manager():
             print("\nPassword Manager Menu:")
             print("1. View Stored Passwords")
             print("2. Add New Password")
+            print("3. Delete Password")
+            print("4. Modify Existing Password/Email")
             print("0. Exit")
             choice = input("Enter your choice: ")
 
@@ -82,6 +84,12 @@ def manager():
                 email = input("Enter associated email: ")
                 password = input("Enter the password: ")
                 add_password(service, email, password, key)
+            elif choice == "3":
+                service = input("Enter the service name to delete: ")
+                delete_password(service, key)
+            elif choice == "4":
+                service = input("Enter the service name to modify: ")
+                modify_password(service, key)
             elif choice == "0":
                 print("Exiting the program.")
                 break
@@ -90,35 +98,7 @@ def manager():
 
 if __name__ == "__main__":
     manager()
-#
-# def viewPasswords():
-#   exit = 1
-#   while exit != 0:
-#     print("viewing passwords")
-#     exit = int(input("Enter 0 to exit: "))
-#   return manager()
-#
-# def newPassword():
-#   exit = 1
-#   while exit != 0:
-#     print("entering new password")
-#     exit = int(input("Enter 0 to exit: "))
-#   return manager()
-#
-# def deletePassword():
-#   exit = 1
-#   while exit != 0:
-#     print("deleting password")
-#     exit = int(input("Enter 0 to exit: "))
-#   return manager()
-#
-# def changePassword():
-#   exit = 1
-#   while exit != 0:
-#     print("changing password")
-#     exit = int(input("Enter 0 to exit: "))
-#   return manager()
-#
+
 # def changeManagerPassword():
 #   exit = 1
 #   while exit != 0:

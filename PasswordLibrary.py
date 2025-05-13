@@ -76,6 +76,43 @@ def add_password(service_name: str, email: str, password: str, key: bytes):
     save_passwords(passwords, key)
     print(f"Password for '{service_name}' added successfully.")
 
+def delete_password(service_name: str, key: bytes):
+    """Delete a password entry by service name."""
+    passwords = load_passwords(key)
+
+    if service_name in passwords:
+        del passwords[service_name]
+        save_passwords(passwords, key)
+        print(f"Password for '{service_name}' has been deleted.")
+    else:
+        print(f"No entry found for service '{service_name}'.")
+
+def modify_password(service_name: str, key: bytes):
+    """Modify the email or password for a given service."""
+    passwords = load_passwords(key)
+
+    if service_name not in passwords:
+        print(f"No entry found for service '{service_name}'.")
+        return
+
+    print("\nWhat would you like to modify?")
+    print("1. Update Email")
+    print("2. Update Password")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        new_email = input("Enter the new email: ")
+        passwords[service_name]["email"] = new_email
+        print(f"Email for '{service_name}' updated successfully.")
+    elif choice == "2":
+        new_password = input("Enter the new password: ")
+        passwords[service_name]["password"] = new_password
+        print(f"Password for '{service_name}' updated successfully.")
+    else:
+        print("Invalid choice. Returning to main menu.")
+
+    save_passwords(passwords, key)
+
 def view_passwords(key: bytes):
     """View all stored passwords."""
     passwords = load_passwords(key)
